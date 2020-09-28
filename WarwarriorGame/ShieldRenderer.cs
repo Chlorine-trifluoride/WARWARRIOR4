@@ -5,19 +5,19 @@ using System.Text;
 
 namespace WarwarriorGame
 {
-    class ParticleRenderer
+    class ShieldRenderer
     {
-        protected Particle particle;
-        protected static IntPtr texture;
-        protected SDL.SDL_Rect dstRect;
-        protected static  SDL.SDL_Point center;
-        protected static int width, height;
+        private Actor actor;
+        private static IntPtr texture;
+        private SDL.SDL_Rect dstRect;
+        private SDL.SDL_Point center;
+        private static int width, height;
 
-        protected const int scale = 1;
+        private const int scale = 1;
 
-        public ParticleRenderer(Particle particle)
+        public ShieldRenderer(Actor actor)
         {
-            this.particle = particle;
+            this.actor = actor;
         }
 
         public static void LoadInit(IntPtr rendererPtr, string texturePath)
@@ -25,9 +25,6 @@ namespace WarwarriorGame
             texture = SDL_image.IMG_LoadTexture(rendererPtr, texturePath);
 
             SDL.SDL_QueryTexture(texture, out _, out _, out width, out height);
-
-            center.x = width / 2 * scale;
-            center.y = height / 2 * scale;
         }
 
         public void Cleanup()
@@ -35,13 +32,17 @@ namespace WarwarriorGame
             SDL.SDL_DestroyTexture(texture);
         }
 
-        public virtual void Render(IntPtr rendererPtr, GameBase game)
+        public void Render(IntPtr rendererPtr, GameBase game)
         {
-            dstRect.w = width * scale;
-            dstRect.h = height * scale;
+            dstRect.w = (int)(width * scale * actor.Shield.Radius);
+            dstRect.h = (int)(height * scale * actor.Shield.Radius);
 
-            dstRect.x = (int)(particle.Position.X - Camera.Position.X);
-            dstRect.y = (int)(particle.Position.Y - Camera.Position.Y);
+            center.x = (int)(dstRect.w);
+            center.y = (int)(dstRect.h);
+
+            dstRect.x = (int)(actor.Origin.X - center.x / 2 - Camera.Position.X);
+            dstRect.y = (int)(actor.Origin.Y - center.y / 2 - Camera.Position.Y);
+
 
             SDL.SDL_RenderCopyEx(rendererPtr, texture, IntPtr.Zero, ref dstRect,
                 0.0f, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);

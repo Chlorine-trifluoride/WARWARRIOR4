@@ -1,35 +1,47 @@
-﻿using System;
+﻿using SDL2;
+using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace WarwarriorGame
 {
     class Projectile : Particle
     {
+        public static List<Projectile> projectiles = new List<Projectile>();
+        private uint spawnTime;
         public float Rotation { get; set; }
         public float RotationDegrees => Utils.RadianToDegrees(Rotation);
 
+        private const uint TIME_TO_LIVE = 500;
+
         public Projectile(Vector2 position, Vector2 direction, float rotation) : base(position, direction)
         {
+            spawnTime = SDL.SDL_GetTicks();
+            projectiles.Add(this);
             this.Rotation = rotation;
             Renderer = new ProjectileRenderer(this);
         }
 
         public override void UpdateLogic(float deltaTime)
         {
-            //for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
-            //{
-            //    Vector2 difference = StellarBase.stellarObjects[i].Position + StellarBase.stellarObjects[i].Renderer.GetCenter() - Position;
-            //    Vector2 direction = difference.Normalize();
+            if (SDL.SDL_GetTicks() - spawnTime > TIME_TO_LIVE)
+            {
+                for (int i = 0; i < Actor.Actors.Count; i++)
+                {
+                    Vector2 difference = Actor.Actors[i].Position + Actor.Actors[i].Renderer.GetCenter() - Position;
+                    Vector2 direction = difference.Normalize();
 
-            //    // distance
-            //    float distance = Vector2.Dot(direction, difference);
+                    // distance
+                    float distance = Vector2.Dot(direction, difference);
 
-            //    if ((difference.X * Heading.Y) > (difference.Y * Heading.X))
-            //        Rotation -= deltaTime * MathF.Sqrt(Heading.Magnitude()) * 0.8f;
-            //    else
-            //        Rotation += deltaTime * MathF.Sqrt(Heading.Magnitude()) * 0.8f;
-            //}
+                    if (distance < Actor.Actors[i].Shield.Radius * 64 + 16)
+                    {
+                        Actor.Actors[i].Shield.OnHit(Heading);
+                        Particles.Remove(this);
+                    }
+                }
+            }
 
             base.UpdateLogic(deltaTime);
         }

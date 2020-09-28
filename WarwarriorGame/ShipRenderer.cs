@@ -5,23 +5,21 @@ using System.Text;
 
 namespace WarwarriorGame
 {
-    class ShipRenderer : IRenderer
+    class ShipRenderer : ActorRenderer
     {
-        private Actor actor;
         private IntPtr spriteSheet;
-        private SDL.SDL_Rect dstRect;
-        private SDL.SDL_Rect srcRect;
-        private SDL.SDL_Point center;
+        protected SDL.SDL_Rect dstRect;
+        protected SDL.SDL_Rect srcRect;
+        protected SDL.SDL_Point center;
 
-        const int SCALE = 1;
-        const int SPRITE_PIXELS = 64;
+        protected const int SCALE = 1;
+        protected const int SPRITE_PIXELS = 64;
 
-        public ShipRenderer(Actor actor)
+        public ShipRenderer(Actor actor) : base(actor)
         {
-            this.actor = actor;
         }
 
-        public void LoadInit(IntPtr rendererPtr, string spriteSheetPath)
+        public override void LoadInit(IntPtr rendererPtr, string spriteSheetPath)
         {
             spriteSheet = SDL_image.IMG_LoadTexture(rendererPtr, spriteSheetPath);
             Console.WriteLine(SDL.SDL_GetError());
@@ -42,12 +40,12 @@ namespace WarwarriorGame
             srcRect.h = SPRITE_PIXELS;
         }
 
-        public void Cleanup()
+        public override void Cleanup()
         {
             SDL.SDL_DestroyTexture(spriteSheet);
         }
 
-        private void SetSrcRect()
+        protected void SetSrcRect()
         {
             int steerDir = actor.GetSteerDirection();
 
@@ -70,22 +68,18 @@ namespace WarwarriorGame
             }
         }
 
-        public void Render(IntPtr rendererPtr, GameBase game)
+        public override void Render(IntPtr rendererPtr, GameBase game)
         {
             dstRect.x = (int)(actor.Position.X - Camera.Position.X);
             dstRect.y = (int)(actor.Position.Y - Camera.Position.Y);
 
-            //dstRect.x = (int)actor.Position.X;
-            //dstRect.y = (int)actor.Position.Y;
-
-            // set srcRect based on steerDirection
             SetSrcRect();
 
             SDL.SDL_RenderCopyEx(rendererPtr, spriteSheet, ref srcRect, ref dstRect,
                 actor.RotationDegrees, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
         }
 
-        public Vector2 GetCenter()
+        public override Vector2 GetCenter()
         {
             return new Vector2(center.x, center.y);
         }

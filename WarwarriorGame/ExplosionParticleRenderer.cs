@@ -5,22 +5,17 @@ using System.Text;
 
 namespace WarwarriorGame
 {
-    class ParticleRenderer
+    class ExplosionParticleRenderer : ParticleRenderer
     {
-        protected Particle particle;
-        protected static IntPtr texture;
-        protected SDL.SDL_Rect dstRect;
-        protected static  SDL.SDL_Point center;
-        protected static int width, height;
+        protected new Particle particle;
+        protected static new IntPtr texture;
 
-        protected const int scale = 1;
-
-        public ParticleRenderer(Particle particle)
+        public ExplosionParticleRenderer(Particle particle) : base(particle)
         {
             this.particle = particle;
         }
 
-        public static void LoadInit(IntPtr rendererPtr, string texturePath)
+        public static new void LoadInit(IntPtr rendererPtr, string texturePath)
         {
             texture = SDL_image.IMG_LoadTexture(rendererPtr, texturePath);
 
@@ -30,12 +25,12 @@ namespace WarwarriorGame
             center.y = height / 2 * scale;
         }
 
-        public void Cleanup()
+        public new void Cleanup()
         {
             SDL.SDL_DestroyTexture(texture);
         }
 
-        public virtual void Render(IntPtr rendererPtr, GameBase game)
+        public override void Render(IntPtr rendererPtr, GameBase game)
         {
             dstRect.w = width * scale;
             dstRect.h = height * scale;
@@ -45,11 +40,6 @@ namespace WarwarriorGame
 
             SDL.SDL_RenderCopyEx(rendererPtr, texture, IntPtr.Zero, ref dstRect,
                 0.0f, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
-        }
-
-        public Vector2 GetCenter()
-        {
-            return new Vector2(center.x, center.y);
         }
     }
 }

@@ -25,6 +25,12 @@ namespace WarwarriorGame
 
         public static Vector2 Zero => new Vector2(0.0f, 0.0f);
 
+        public static Vector2 Random()
+        {
+            Random random = new Random();
+            return new Vector2((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f);
+        }
+
         public override string ToString()
         {
             return $"[{X}]:[{Y}]";

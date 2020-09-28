@@ -10,13 +10,10 @@ namespace WarwarriorGame
     {
         private Background background;
         private Player player;
-        private Enemy enemy;
-        private StellarBase star;
-        private StellarBase star2;
         private AnimatedStellarObject star3;
         private UI ui;
-
-        private List<Projectile> projectiles = new List<Projectile>();
+        private uint nextSpawn = 0;
+        private Random random = new Random();
 
         public Game1(int windowWidth, int windowHeight) : base(windowWidth, windowHeight)
         {
@@ -28,11 +25,20 @@ namespace WarwarriorGame
             base.Init();
 
             background = new Background();
-            player = new Player(new Vector2(48.0f, 48.0f), MathF.PI / 2);
-            enemy = new Enemy(new Vector2(300.0f, 300.0f), 0.0f);
+            player = new Player(new Vector2(1008.0f, 808.0f), MathF.PI / 2);
+            //enemy = new Enemy(new Vector2(300.0f, 300.0f), 0.0f);
             //star = new StellarBase(new Vector2(500.0f, 300.0f), 2000.0f);
             //star2 = new StellarBase(new Vector2(1300.0f, 850.0f), 700.0f);
-            star3 = new AnimatedStellarObject(new Vector2(500.0f, 300.0f), 1000.0f);
+            star3 = new AnimatedStellarObject(new Vector2(300.0f, 500.0f), 1000.0f);
+
+            // Generate random stars
+            for (int x = -5; x < 5; x++)
+            {
+                for (int y = -5; y < 5; y++)
+                {
+                    new StellarBase(new Vector2(1200.0f * x, 1200.0f * y), random.Next(1000, 3000));
+                }
+            }
 
             ui = new UI(player);
         }
@@ -40,7 +46,9 @@ namespace WarwarriorGame
         protected override void Cleanup()
         {
             player.Renderer.Cleanup();
-            enemy.Renderer.Cleanup();
+            EnemyShipRenderer.Cleanup();
+            StellarRenderer.Cleanup();
+            AnimatedStellarRenderer.Cleanup();
             ui.Cleanup();
 
             base.Cleanup();
@@ -50,11 +58,13 @@ namespace WarwarriorGame
         {
             background.LoadInit(rendererPtr, "assets/textures/stars01_brightstarts.png");
             player.Renderer.LoadInit(rendererPtr, "assets/textures/playersheet.png");
-            enemy.Renderer.LoadInit(rendererPtr, "assets/textures/enemysheet.png");
             ParticleRenderer.LoadInit(rendererPtr, "assets/textures/PlayerFire.png");
-            //star.Renderer.LoadInit(rendererPtr, "assets/textures/star01.png");
-            //star2.Renderer.LoadInit(rendererPtr, "assets/textures/star01.png");
-            star3.Renderer.LoadInit(rendererPtr, "assets/textures/star_blue_fixed.png");
+            StellarRenderer.LoadInit(rendererPtr, "assets/textures/star01.png");
+            AnimatedStellarRenderer.LoadInit(rendererPtr, "assets/textures/star_blue_fixed.png");
+            ShieldRenderer.LoadInit(rendererPtr, "assets/textures/Shield.png");
+            ShieldParticleRenderer.LoadInit(rendererPtr, "assets/textures/ShieldParticle.png");
+            ExplosionParticleRenderer.LoadInit(rendererPtr, "assets/textures/ExplosionParticle.png");
+            EnemyShipRenderer.LoadInit(rendererPtr, "assets/textures/enemysheet.png");
             ui.LoadInit(rendererPtr);
         }
 
@@ -82,17 +92,27 @@ namespace WarwarriorGame
 
             if (InputManager.GetKeyState(SDL.SDL_Keycode.SDLK_SPACE))
             {
-                Projectile p = new Projectile(player.Position + player.Renderer.GetCenter(), player.Heading, player.Rotation);
-                projectiles.Add(p);
+                player.Fire();
+            }
+
+            if (SDL.SDL_GetTicks() > nextSpawn)
+            {
+                Console.WriteLine("Spawning new enemy");
+                new Enemy(Player.Inst.Position + Vector2.Random() * 1500.0f, 0.0f);
+
+                nextSpawn = SDL.SDL_GetTicks() + 7000;
             }
 
             Camera.Update(player.Position, this, deltaTime);
-            player.Update(deltaTime);
-            enemy.Update(deltaTime);
 
-            for (int i = 0; i < projectiles.Count; i++)
+            for (int i = 0; i < Actor.Actors.Count; i++)
             {
-                projectiles[i].UpdateLogic(deltaTime);
+                Actor.Actors[i].Update(deltaTime);
+            }
+
+            for (int i = 0; i < Particle.Particles.Count; i++)
+            {
+                Particle.Particles[i].UpdateLogic(deltaTime);
             }
 
             ui.Update();
@@ -103,15 +123,21 @@ namespace WarwarriorGame
             SDL.SDL_RenderClear(rendererPtr);
 
             background.Render(rendererPtr, this);
-            //star.Renderer.Render(rendererPtr, this);
-            //star2.Renderer.Render(rendererPtr, this);
-            star3.Renderer.Render(rendererPtr, this);
-            enemy.Renderer.Render(rendererPtr, this);
-            player.Renderer.Render(rendererPtr, this);
 
-            for (int i = 0; i < projectiles.Count; i++)
+            for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
             {
-                projectiles[i].Renderer.Render(rendererPtr, this);
+                StellarBase.stellarObjects[i].Renderer.Render(rendererPtr, this);
+            }
+
+            for (int i = 0; i < Actor.Actors.Count; i++)
+            {
+                Actor.Actors[i].Renderer.Render(rendererPtr, this);
+                Actor.Actors[i].Shield.Renderer.Render(rendererPtr, this);
+            }
+
+            for (int i = 0; i < Particle.Particles.Count; i++)
+            {
+                Particle.Particles[i].Renderer.Render(rendererPtr, this);
             }
 
             ui.Render(rendererPtr, this);

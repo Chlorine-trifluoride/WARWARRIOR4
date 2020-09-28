@@ -4,9 +4,9 @@ using WarwarriorGame;
 
 namespace WarwarriorGame
 {
-    class ActorRenderer : IRenderer
+    class ActorRenderer
     {
-        private Actor actor;
+        protected Actor actor;
         private IntPtr texture;
         private SDL.SDL_Rect dstRect;
         private SDL.SDL_Point center;
@@ -18,7 +18,7 @@ namespace WarwarriorGame
             this.actor = actor;
         }
 
-        public void LoadInit(IntPtr rendererPtr, string texturePath)
+        public virtual void LoadInit(IntPtr rendererPtr, string texturePath)
         {
             texture = SDL_image.IMG_LoadTexture(rendererPtr, texturePath);
 
@@ -31,12 +31,12 @@ namespace WarwarriorGame
             center.y = h / 2 * scale;
         }
 
-        public void Cleanup()
+        public virtual void Cleanup()
         {
             SDL.SDL_DestroyTexture(texture);
         }
 
-        public void Render(IntPtr rendererPtr, GameBase game)
+        public virtual void Render(IntPtr rendererPtr, GameBase game)
         {
             dstRect.x = (int)(actor.Position.X - Camera.Position.X);
             dstRect.y = (int)(actor.Position.Y - Camera.Position.Y);
@@ -45,7 +45,7 @@ namespace WarwarriorGame
                 actor.RotationDegrees, ref center, SDL.SDL_RendererFlip.SDL_FLIP_NONE);
         }
 
-        public Vector2 GetCenter()
+        public virtual Vector2 GetCenter()
         {
             return new Vector2(center.x, center.y);
         }

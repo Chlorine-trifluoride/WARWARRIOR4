@@ -7,7 +7,7 @@ namespace WarwarriorGame
     class StellarBase
     {
         public static List<StellarBase> stellarObjects = new List<StellarBase>();
-        public IRenderer Renderer { get; set; }
+        public StellarRenderer Renderer { get; set; }
         public float Mass { get; set; }
         public Vector2 Position { get; set; }
 
