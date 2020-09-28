@@ -1,0 +1,104 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageIcon></PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<None Include="lib\image\libpng16-16.dll">
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\Background.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\Enemy.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\EnemyFire.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\enemysheet.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\ExplosionParticle.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\Missile.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\Player.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\PlayerFire.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\playersheet.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\Shield.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\ShieldParticle.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\star01.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\stars01_brightstarts.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\StartTexture.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\star_blue_fixed.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+    <None Update="lib\image\libjpeg-9.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\image\libtiff-5.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\image\libwebp-7.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\image\SDL2_image.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\image\zlib1.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="lib\SDL2.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+	  
+	<None Update="media\car_img.png">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	  
+	<None Update="media\font\typed.ttf">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition="$(os) == 'Windows_NT'" Command="xcopy /d /y $(ProjectDir)lib\SDL2.dll $(OutDir)&#xD;&#xA;xcopy /d /y $(ProjectDir)lib\image $(OutDir)&#xD;&#xA;xcopy /d /y $(ProjectDir)lib\ttf $(OutDir)" />
+
+	  <Exec Condition="$(os) == 'UNIX' and ! $([System.IO.File]::Exists('$(OutDir)libSDL2.so'))" Command="ln -s -v /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 $(OutDir)libSDL2.so" />
+
+	  <Exec Condition="$(os) == 'UNIX' and ! $([System.IO.File]::Exists('$(OutDir)libSDL2_image.so'))" Command="ln -s -v /usr/lib/x86_64-linux-gnu/libSDL2_image-2.0.so.0 $(OutDir)libSDL2_image.so" />
+
+	  <Exec Condition="$(os) == 'UNIX' and ! $([System.IO.File]::Exists('$(OutDir)libSDL2_ttf.so'))" Command="ln -s -v /usr/lib/x86_64-linux-gnu/libSDL2_ttf-2.0.so.0 $(OutDir)libSDL2_ttf.so" />
+  </Target>
+
+</Project>
