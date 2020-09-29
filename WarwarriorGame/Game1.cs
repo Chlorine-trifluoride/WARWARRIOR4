@@ -82,8 +82,6 @@ namespace WarwarriorGame
 
         protected override void UpdateLogic(float deltaTime)
         {
-            base.UpdateLogic(deltaTime);
-
             if (InputManager.GetKeyState(SDL.SDL_Keycode.SDLK_w))
                 player.Accelerate();
 
@@ -107,7 +105,7 @@ namespace WarwarriorGame
                 player.Fire();
             }
 
-            if (InputManager.GetKeyState(SDL.SDL_Keycode.SDLK_r))// && Player.Inst.Shield.Remaining <= 0)
+            if (InputManager.GetKeyDownThisFrame(SDL.SDL_Keycode.SDLK_r))// && Player.Inst.Shield.Remaining <= 0)
             {
                 player = Player.GetRespawnNewPlayer();
             }
@@ -154,6 +152,8 @@ namespace WarwarriorGame
             }
 
             ui.Update(deltaTime);
+
+            base.UpdateLogic(deltaTime);
         }
 
         protected override void RenderScene(IntPtr rendererPtr)
