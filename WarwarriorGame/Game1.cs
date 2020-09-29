@@ -57,7 +57,7 @@ namespace WarwarriorGame
         protected override void Load(IntPtr rendererPtr)
         {
             background.LoadInit(rendererPtr, "assets/textures/stars01_brightstarts.png");
-            player.Renderer.LoadInit(rendererPtr, "assets/textures/playersheet.png");
+            PlayerShipRenderer.LoadInit(rendererPtr, "assets/textures/playersheet.png");
             ParticleRenderer.LoadInit(rendererPtr, "assets/textures/PlayerFire.png");
             StellarRenderer.LoadInit(rendererPtr, "assets/textures/star01.png");
             AnimatedStellarRenderer.LoadInit(rendererPtr, "assets/textures/star_blue_fixed.png");
@@ -95,6 +95,11 @@ namespace WarwarriorGame
                 player.Fire();
             }
 
+            if (InputManager.GetKeyState(SDL.SDL_Keycode.SDLK_r))// && Player.Inst.Shield.Remaining <= 0)
+            {
+                player = Player.GetRespawnNewPlayer();
+            }
+
             if (SDL.SDL_GetTicks() > nextSpawn)
             {
                 Console.WriteLine("Spawning new enemy");
@@ -112,6 +117,10 @@ namespace WarwarriorGame
 
             for (int i = 0; i < Particle.Particles.Count; i++)
             {
+                // Don't update particles too far away
+                if (Utils.GetDistance(Particle.Particles[i].Position, Player.Inst.Position) > 2500.0f)
+                    continue;
+
                 Particle.Particles[i].UpdateLogic(deltaTime);
             }
 

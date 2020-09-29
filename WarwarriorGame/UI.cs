@@ -45,7 +45,7 @@ namespace WarwarriorGame
         {
             // keep fixed spacing
             string rotation = $"Rotation: {player.RotationDegrees}".PadRight(13, ' ');
-            text = $"{rotation} Speed: {player.VelocityInKmh}";
+            text = $"{rotation} Speed: {player.VelocityInKmh} Particles: {Particle.Particles.Count}";
         }
 
         public void Render(IntPtr rendererPtr, GameBase game)

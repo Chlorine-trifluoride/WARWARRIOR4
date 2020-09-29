@@ -28,9 +28,6 @@ namespace WarwarriorGame
 
         public virtual void UpdateLogic(float deltaTime)
         {
-            if (Utils.GetDistance(Position, Player.Inst.Position) > 2500.0f)
-                return;
-
             for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
             {
                 Vector2 difference = StellarBase.stellarObjects[i].Position + StellarBase.stellarObjects[i].Renderer.GetCenter() - Position;

@@ -60,7 +60,13 @@
 	<None Update="assets\textures\StartTexture.png">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
+	<None Update="assets\textures\star_blue03.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
 	<None Update="assets\textures\star_blue_fixed.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\textures\star_red01.png">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
     <None Update="lib\image\libjpeg-9.dll">

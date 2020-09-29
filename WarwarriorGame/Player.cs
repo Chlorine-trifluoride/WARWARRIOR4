@@ -13,7 +13,13 @@ namespace WarwarriorGame
         public Player(Vector2 position, float rotation) : base(position, rotation) 
         {
             Inst = this;
-            Renderer = new ShipRenderer(this);
+            Renderer = new PlayerShipRenderer(this);
+        }
+
+        // TODO: Hacky fixy
+        public static Player GetRespawnNewPlayer()
+        {
+            return new Player(new Vector2(1008.0f, 808.0f), MathF.PI / 2);
         }
     }
 }
