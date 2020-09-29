@@ -41,11 +41,11 @@ namespace WarwarriorGame
         }
 
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             // keep fixed spacing
             string rotation = $"Rotation: {player.RotationDegrees}".PadRight(13, ' ');
-            text = $"{rotation} Speed: {player.VelocityInKmh} Particles: {Particle.Particles.Count}";
+            text = $"{rotation} Speed: {player.VelocityInKmh} Particles: {Particle.Particles.Count} FPS: {(int)(1.0f/deltaTime)}";
         }
 
         public void Render(IntPtr rendererPtr, GameBase game)
