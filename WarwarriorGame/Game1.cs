@@ -17,11 +17,21 @@ namespace WarwarriorGame
         private UI ui;
         private uint nextSpawn = 0;
         private uint difficulty;
-        private Random random = new Random();
+        private Random random;
 
         public Game1(int windowWidth, int windowHeight, uint difficulty) : base(windowWidth, windowHeight)
         {
             this.difficulty = difficulty;
+            this.random = new Random();
+            ResetGame();
+        }
+
+        protected void ResetGame()
+        {
+            Particle.Particles.Clear();
+            Projectile.projectiles.Clear();
+            StellarBase.stellarObjects.Clear();
+            Actor.Actors.Clear();
         }
 
         protected override void Init()
