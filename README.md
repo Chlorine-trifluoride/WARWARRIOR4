@@ -6,7 +6,8 @@
 
 ### Info
 
-Warwarrior is a space physics game.
+Warwarrior is a space physics game. All objects with mass interact with each other via gravity.
+A multi-core processor is strongly recommended.
 <br/>
 
 <img src="https://github.com/Chlorine-trifluoride/WARWARRIOR4/raw/master/.github/media/wsmall.gif"/>
