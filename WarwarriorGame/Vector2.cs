@@ -74,8 +74,7 @@ namespace WarwarriorGame
         public static Vector2 Normalize(this Vector2 a)
         {
             float distance = MathF.Sqrt(a.X * a.X + a.Y * a.Y);
-            Vector2 v = new Vector2(a.X / distance, a.Y / distance);
-            return v;
+            return new Vector2(a.X / distance, a.Y / distance);
         }
 
         public static float Magnitude(this Vector2 a)
