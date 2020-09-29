@@ -16,6 +16,8 @@ namespace WarwarriorGame
         private MenuUIRenderer menuRenderer;
         private int selectedLevel = 0;
         private const int NUM_LEVELS = 5;
+        private AnimRenderer redAnimPlanet;
+        private AnimRenderer blueAnimPlanet;
 
         public MainMenu(int windowWidth, int windowHeight) : base(windowWidth, windowHeight)
         {
@@ -28,11 +30,16 @@ namespace WarwarriorGame
 
             background = new Background();
             menuRenderer = new MenuUIRenderer();
+            redAnimPlanet = new AnimRenderer();
+            blueAnimPlanet = new AnimRenderer();
         }
 
         protected override void Cleanup()
         {
+            background.Cleanup();
             menuRenderer.Cleanup();
+            redAnimPlanet.Cleanup();
+            blueAnimPlanet.Cleanup();
             base.Cleanup();
         }
 
@@ -40,6 +47,8 @@ namespace WarwarriorGame
         {
             background.LoadInit(rendererPtr, "assets/textures/stars01_brightstarts.png");
             menuRenderer.LoadInit(rendererPtr);
+            redAnimPlanet.LoadInit(rendererPtr, "assets/textures/star_red01.png", 8, 8, 0.12f);
+            blueAnimPlanet.LoadInit(rendererPtr, "assets/textures/star_blue03.png", 8, 8, 0.2f);
         }
 
         protected override void UpdateLogic(float deltaTime)
@@ -67,6 +76,9 @@ namespace WarwarriorGame
                     Program.SelectedLevel = -1;
             }
 
+            // Random camera movement for background
+            Camera.Position = new Vector2(MathF.Sin(SDL.SDL_GetTicks() / 3000.0f), MathF.Cos(SDL.SDL_GetTicks() / 2000.0f)) * 100.0f;
+
             base.UpdateLogic(deltaTime);
         }
 
@@ -82,6 +94,10 @@ namespace WarwarriorGame
             }
 
             menuRenderer.Render(rendererPtr, this, "Quit Game", new Vector2(50.0f, WindowHeight - 100.0f), selectedLevel == 5);
+
+            float selectionHeight = WindowHeight - 100.0f - 40.0f * (5 - selectedLevel);
+            redAnimPlanet.Render(rendererPtr, this, new Vector2(7.0f, selectionHeight));
+            //blueAnimPlanet.Render(rendererPtr, this, new Vector2(WindowWidth / 2.0f, 300.0f));
 
             SDL.SDL_RenderPresent(rendererPtr);
         }
