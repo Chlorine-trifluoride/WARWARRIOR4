@@ -13,6 +13,7 @@ namespace WarwarriorGame
         private IntPtr rendererPtr;
         private IntPtr windowPtr;
 
+        protected long elapsedMilliseconds = 0;
         protected bool quit = false;
 
         public GameBase(int windowWidth, int windowHeight)
@@ -72,6 +73,7 @@ namespace WarwarriorGame
             {
                 float deltaTime = (stopwatch.ElapsedMilliseconds - lastTime) / 1000.0f;
                 lastTime = stopwatch.ElapsedMilliseconds;
+                elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
 
                 HandleEvents();
                 UpdateLogic(deltaTime);

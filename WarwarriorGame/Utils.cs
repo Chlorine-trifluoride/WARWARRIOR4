@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace WarwarriorGame
 {
@@ -51,6 +52,30 @@ namespace WarwarriorGame
                 return (float)(Math.Atan(pyRes / pxRes) + Math.PI);
             else
                 return (float)(Math.Atan(pyRes / pxRes) + (2 * Math.PI));
+        }
+
+        public static string GeneratePlayerName()
+        {
+            string[] words = File.ReadAllLines("assets/wordlist/words.txt");
+            Random rnd = new Random();
+
+            string name = "";
+
+            do
+            {
+                name += Capitalize(words[rnd.Next(0, words.Length)]);
+
+            } while (name.Length < 12);
+
+            return name;
+        }
+
+        private static string Capitalize(string str)
+        {
+            if (str.Length == 1)
+                return str.ToUpper();
+            else
+                return char.ToUpper(str[0]) + str.Substring(1);
         }
     }
 }

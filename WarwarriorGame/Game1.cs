@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SDL2;
 using WarwarriorGame;
+using WarwarriorGame.Network;
 
 namespace WarwarriorGame
 {
@@ -148,7 +149,15 @@ namespace WarwarriorGame
             for (int i = 0; i < Actor.Actors.Count; i++)
             {
                 if (Actor.Actors[i].MarkedForRemoval)
+                {
+                    if (Actor.Actors[i] == Player.Inst && Player.Inst.Score > 0)
+                    {   // Player is dead
+                        // Send score to API
+                        Task.Run(async () => await Leaderboard.SendScore((int)(elapsedMilliseconds / 1000), Player.Inst.Score, (int)difficulty, MainMenu.PlayerName));
+                    }
+
                     Actor.Actors.RemoveAt(i);
+                }
             }
 
             ui.Update(deltaTime);
