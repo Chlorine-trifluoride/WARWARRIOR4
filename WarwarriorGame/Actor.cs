@@ -18,6 +18,7 @@ namespace WarwarriorGame
         public Vector2 Heading => Utils.RadianToVector2(Rotation);
         public int VelocityInKmh => (int)(Velocity * 0.2f);
         public Vector2 Origin => Position + Renderer.GetCenter();
+        public virtual float Mass { get; set; } = 20.0f;
 
         private float steerDirection = 0.0f;
 

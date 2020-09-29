@@ -20,6 +20,14 @@ namespace WarwarriorGame
                     Actor.Actors[i].AddShieldHealth(2);
                     Particles.Remove(this);
                 }
+
+                Vector2 difference = Actor.Actors[i].Origin - Position;
+                Vector2 direction = difference.Normalize();
+
+                // distance
+                float distance = Vector2.Dot(direction, difference);
+
+                Steer(direction, Actor.Actors[i].Mass / (distance * distance));
             }
 
             base.UpdateLogic(deltaTime);
