@@ -60,6 +60,13 @@ namespace WarwarriorGame
         {
             return a.X * b.X + a.Y * b.Y;
         }
+
+        public static float Distance(Vector2 a, Vector2 b)
+        {
+            Vector2 difference = a - b;
+            Vector2 direction = difference.Normalize();
+            return Vector2.Dot(direction, difference);
+        }
     }
 
     static class Vector2Extensions

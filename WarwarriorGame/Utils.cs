@@ -38,7 +38,7 @@ namespace WarwarriorGame
             float x = vect1.X - vect2.X;
             float y = vect1.Y - vect2.Y;
 
-            return (float)Math.Sqrt(x * x + y * y);
+            return MathF.Sqrt(x * x + y * y);
         }
 
         public static float GetDirection(Vector2 vect1, Vector2 vect2)
