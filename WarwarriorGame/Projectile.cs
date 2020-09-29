@@ -15,12 +15,12 @@ namespace WarwarriorGame
 
         private const uint TIME_TO_LIVE = 500;
 
-        public Projectile(Vector2 position, Vector2 direction, float rotation) : base(position, direction)
+        public Projectile(Vector2 position, Vector2 direction, float rotation, Actor actor) : base(position, direction)
         {
             spawnTime = SDL.SDL_GetTicks();
             projectiles.Add(this);
             this.Rotation = rotation;
-            Renderer = new ProjectileRenderer(this);
+            Renderer = new ProjectileRenderer(this, (actor is Player));
         }
 
         public override void UpdateLogic(float deltaTime)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace WarwarriorGame
@@ -103,7 +104,8 @@ namespace WarwarriorGame
 
         public virtual void Fire()
         {
-            new Projectile(Position + Renderer.GetCenter(), Heading * (Velocity * 0.001f + 1.0f), Rotation);
+            if (Shield.Remaining > -1)
+                new Projectile(Position + Renderer.GetCenter(), Heading * (Velocity * 0.001f + 1.0f), Rotation, this);
         }
 
         public virtual void Update(float deltaTime)

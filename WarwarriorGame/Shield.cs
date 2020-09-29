@@ -7,7 +7,6 @@ namespace WarwarriorGame
 {
     class Shield
     {
-        //public static List<Shield> shields { get; set; }
         private Actor actor;
         public ShieldRenderer Renderer { get; set; }
         public int Remaining { get; set; } = 100;
@@ -16,7 +15,6 @@ namespace WarwarriorGame
         public Shield(Actor actor)
         {
             this.actor = actor;
-            //shields.Add(this);
             Renderer = new ShieldRenderer(actor);
         }
 
@@ -53,6 +51,7 @@ namespace WarwarriorGame
                 new ExplosionParticle(actor.Position + direction * 64.0f, direction * 0.35f);
             }
 
+            Remaining = -1;
             actor.MarkedForRemoval = true;
         }
     }
