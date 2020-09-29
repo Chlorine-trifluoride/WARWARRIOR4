@@ -9,6 +9,7 @@ namespace WarwarriorGame
     {
         public static Player Inst;
         public override float Mass { get; set; } = 50.0f;
+        public int Score { get; set; } = 0;
 
         public Player(Vector2 position, float rotation) : base(position, rotation) 
         {

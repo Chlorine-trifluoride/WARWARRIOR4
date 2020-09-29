@@ -25,7 +25,13 @@ namespace WarwarriorGame
             Remaining -= 10;
 
             if (Remaining <= 0)
+            {
+                // add 100 poits for every kill
+                if (actor is Enemy)
+                    Player.Inst.Score += 100;
+
                 Explode();
+            }
 
             else
                 SpawnEnergyParticles(fromHeading);

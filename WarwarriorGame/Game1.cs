@@ -29,9 +29,6 @@ namespace WarwarriorGame
 
             background = new Background();
             player = new Player(new Vector2(1008.0f, 808.0f), MathF.PI / 2);
-            //enemy = new Enemy(new Vector2(300.0f, 300.0f), 0.0f);
-            //star = new StellarBase(new Vector2(500.0f, 300.0f), 2000.0f);
-            //star2 = new StellarBase(new Vector2(1300.0f, 850.0f), 700.0f);
             star3 = new AnimatedStellarObject(new Vector2(300.0f, 500.0f), 1000.0f);
 
             // Generate random stars
@@ -43,7 +40,7 @@ namespace WarwarriorGame
                 }
             }
 
-            ui = new UI(player);
+            ui = new UI();
         }
 
         protected override void Cleanup()
@@ -105,7 +102,12 @@ namespace WarwarriorGame
 
             if (SDL.SDL_GetTicks() > nextSpawn)
             {
-                new Enemy(Player.Inst.Position + Vector2.Random() * 1500.0f, 0.0f);
+                Vector2 spawnPos = Vector2.Random() * WindowWidth * 2.5f;
+                
+                while (Vector2.Distance(Player.Inst.Position, spawnPos) < WindowWidth)
+                    spawnPos = Vector2.Random() * WindowWidth * 2.5f;
+
+                new Enemy(spawnPos, (float)(random.NextDouble() * 2 * MathF.PI));
                 nextSpawn = SDL.SDL_GetTicks() + 3000;
             }
 

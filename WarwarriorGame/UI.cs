@@ -5,8 +5,6 @@ namespace WarwarriorGame
 {
     class UI
     {
-        private Player player;
-
         private IntPtr fontPtr;
         private SDL.SDL_Color textColor;
         private IntPtr surface;
@@ -14,9 +12,8 @@ namespace WarwarriorGame
         private SDL.SDL_Rect dstRect;
         private string text;
 
-        public UI(Player player)
+        public UI()
         {
-            this.player = player;
         }
 
         public void LoadInit(IntPtr rendererPtr)
@@ -44,8 +41,8 @@ namespace WarwarriorGame
         public void Update(float deltaTime)
         {
             // keep fixed spacing
-            string rotation = $"Rotation: {player.RotationDegrees}".PadRight(13, ' ');
-            text = $"{rotation} Speed: {player.VelocityInKmh} Particles: {Particle.Particles.Count} FPS: {(int)(1.0f/deltaTime)}";
+            string rotation = $"Rotation: {Player.Inst.RotationDegrees}".PadRight(13, ' ');
+            text = $"{rotation} Speed: {Player.Inst.VelocityInKmh} Particles: {Particle.Particles.Count} FPS: {(int)(1.0f/deltaTime)} Score: {Player.Inst.Score}";
         }
 
         public void Render(IntPtr rendererPtr, GameBase game)
