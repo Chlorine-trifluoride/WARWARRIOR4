@@ -39,15 +39,15 @@ namespace WarwarriorGame
             }
         }
 
-        private void Explode()
+        public void Explode()
         {
             for (int i = 0; i < 40; i++)
             {
                 Vector2 direction = Vector2.Random().Normalize();
-                new ExplosionParticle(actor.Position + direction * 64.0f, direction * 0.5f);
+                new ExplosionParticle(actor.Position + direction * 64.0f, direction * 0.35f);
             }
 
-            Actor.Actors.Remove(actor);
+            actor.MarkedForRemoval = true;
         }
     }
 }

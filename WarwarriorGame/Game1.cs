@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using SDL2;
 using WarwarriorGame;
 
@@ -36,7 +39,7 @@ namespace WarwarriorGame
             {
                 for (int y = -5; y < 5; y++)
                 {
-                    new StellarBase(new Vector2(1200.0f * x, 1200.0f * y), random.Next(1000, 3000));
+                    new StellarBase(new Vector2(2700.0f * x, 2700.0f * y), random.Next(1300, 5000));
                 }
             }
 
@@ -102,10 +105,8 @@ namespace WarwarriorGame
 
             if (SDL.SDL_GetTicks() > nextSpawn)
             {
-                Console.WriteLine("Spawning new enemy");
                 new Enemy(Player.Inst.Position + Vector2.Random() * 1500.0f, 0.0f);
-
-                nextSpawn = SDL.SDL_GetTicks() + 7000;
+                nextSpawn = SDL.SDL_GetTicks() + 3000;
             }
 
             Camera.Update(player.Position, this, deltaTime);
@@ -115,16 +116,30 @@ namespace WarwarriorGame
                 Actor.Actors[i].Update(deltaTime);
             }
 
+            Parallel.For(0, Particle.Particles.Count,
+                i => {
+                    // Don't update particles too far away
+                    if (Utils.GetDistance(Particle.Particles[i].Position, Player.Inst.Position) > 2500.0f)
+                        return;
+
+                    Particle.Particles[i].UpdateLogic(deltaTime);
+                });
+
+            // remove particles marked for removal
             for (int i = 0; i < Particle.Particles.Count; i++)
             {
-                // Don't update particles too far away
-                if (Utils.GetDistance(Particle.Particles[i].Position, Player.Inst.Position) > 2500.0f)
-                    continue;
-
-                Particle.Particles[i].UpdateLogic(deltaTime);
+                if (Particle.Particles[i].MarkedForRemoval)
+                    Particle.Particles.RemoveAt(i);
             }
 
-            ui.Update();
+            // remove actors marked for removal
+            for (int i = 0; i < Actor.Actors.Count; i++)
+            {
+                if (Actor.Actors[i].MarkedForRemoval)
+                    Actor.Actors.RemoveAt(i);
+            }
+
+            ui.Update(deltaTime);
         }
 
         protected override void RenderScene(IntPtr rendererPtr)

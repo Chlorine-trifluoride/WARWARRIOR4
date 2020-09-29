@@ -19,6 +19,7 @@ namespace WarwarriorGame
         public int VelocityInKmh => (int)(Velocity * 0.2f);
         public Vector2 Origin => Position + Renderer.GetCenter();
         public virtual float Mass { get; set; } = 20.0f;
+        public bool MarkedForRemoval { get; set; } = false;
 
         private float steerDirection = 0.0f;
 
@@ -121,6 +122,17 @@ namespace WarwarriorGame
             Vector2 directionVector = Utils.RadianToVector2(Rotation);
             Position += directionVector * Velocity * deltaTime;
             ApplyGravity(deltaTime);
+
+            // Remove if we hit a stellar object
+            for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
+            {
+                float distance = Vector2.Distance(StellarBase.stellarObjects[i].Origin, Position);
+
+                if (distance < StellarBase.stellarObjects[i].Radius)
+                {
+                    Shield.Explode();
+                }
+            }
         }
 
         public virtual void ApplyGravity(float deltaTime)

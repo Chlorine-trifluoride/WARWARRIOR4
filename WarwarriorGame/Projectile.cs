@@ -38,7 +38,7 @@ namespace WarwarriorGame
                     if (distance < Actor.Actors[i].Shield.Radius * 64 + 16)
                     {
                         Actor.Actors[i].Shield.OnHit(Heading);
-                        Particles.Remove(this);
+                        MarkedForRemoval = true;
                     }
                 }
             }

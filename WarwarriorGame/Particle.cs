@@ -11,6 +11,7 @@ namespace WarwarriorGame
         public ParticleRenderer Renderer;
         public Vector2 Position { get; set; }
         public Vector2 Heading { get; set; }
+        public bool MarkedForRemoval { get; protected set; } = false;
 
         public Particle(Vector2 position, Vector2 direction)
         {
@@ -28,6 +29,17 @@ namespace WarwarriorGame
 
         public virtual void UpdateLogic(float deltaTime)
         {
+            for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
+            {
+                float distance = Vector2.Distance(StellarBase.stellarObjects[i].Origin, Position);
+
+                if (distance < StellarBase.stellarObjects[i].Radius)
+                {
+                    MarkedForRemoval = true;
+                    return;
+                }
+            }
+
             for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
             {
                 Vector2 difference = StellarBase.stellarObjects[i].Origin - Position;
