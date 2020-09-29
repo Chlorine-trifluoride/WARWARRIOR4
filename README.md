@@ -52,6 +52,17 @@ The post build script tries to add symlink to the libs. If it fails do it manual
 ln -s /path/to/lib /path/to/build/bin/lib
 ```
 
+### API Usage
+
+Rename LeaderboardAPI/Utils/DBConnectionHelper _RENAME.cs to **DBConnectionHelper.cs**
+Open the file. Rename the class to DBConnectionHelper.
+Adjust the settings to your PostgreSQL connection settings.
+
+Build and run the API on a port of your choosing.
+
+Open WarwarriorGame/Network/Leaderboard.cs
+Edit ```const string API_PATH``` to point to your API.
+
 ## WarwarriorGame Usage
 
 Warwarrior is a space physics game. All objects with mass interact with each other via gravity.
