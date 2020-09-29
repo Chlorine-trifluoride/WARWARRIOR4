@@ -30,7 +30,7 @@ namespace WarwarriorGame
         {
             for (int i = 0; i < StellarBase.stellarObjects.Count; i++)
             {
-                Vector2 difference = StellarBase.stellarObjects[i].Position + StellarBase.stellarObjects[i].Renderer.GetCenter() - Position;
+                Vector2 difference = StellarBase.stellarObjects[i].Origin - Position;
                 Vector2 direction = difference.Normalize();
 
                 // distance
