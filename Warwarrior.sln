@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarwarriorGame", "WarwarriorGame\WarwarriorGame.csproj", "{C3B9401B-EF80-47AA-9C8C-3FA6031F06B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaderboardAPI", "LeaderboardAPI\LeaderboardAPI.csproj", "{627F63C0-CC7C-4E23-AB54-582C63E628DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaderboardModel", "LeaderboardModel\LeaderboardModel.csproj", "{981F691B-C9D4-49AE-8F2D-9CCD5B9706C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C3B9401B-EF80-47AA-9C8C-3FA6031F06B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B9401B-EF80-47AA-9C8C-3FA6031F06B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B9401B-EF80-47AA-9C8C-3FA6031F06B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627F63C0-CC7C-4E23-AB54-582C63E628DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627F63C0-CC7C-4E23-AB54-582C63E628DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627F63C0-CC7C-4E23-AB54-582C63E628DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627F63C0-CC7C-4E23-AB54-582C63E628DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{981F691B-C9D4-49AE-8F2D-9CCD5B9706C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{981F691B-C9D4-49AE-8F2D-9CCD5B9706C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{981F691B-C9D4-49AE-8F2D-9CCD5B9706C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{981F691B-C9D4-49AE-8F2D-9CCD5B9706C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

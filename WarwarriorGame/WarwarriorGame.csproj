@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageIcon></PackageIcon>
+    <ApplicationIcon>Player.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +19,7 @@
 	<None Include="lib\image\libpng16-16.dll">
 		<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	</None>
+	<ProjectReference Include="..\LeaderboardModel\LeaderboardModel.csproj" />
 	<None Update="assets\textures\Background.png">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
@@ -67,6 +69,9 @@
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
 	<None Update="assets\textures\star_red01.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+	<None Update="assets\wordlist\words.txt">
 	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
     <None Update="lib\image\libjpeg-9.dll">
