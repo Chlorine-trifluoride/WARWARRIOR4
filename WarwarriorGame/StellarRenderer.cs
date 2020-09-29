@@ -38,6 +38,11 @@ namespace WarwarriorGame
             return new Vector2(center.x, center.y);
         }
 
+        public float GetRadius()
+        {
+            return width * SCALE / 2.2f;
+        }
+
         public virtual void Render(IntPtr rendererPtr, GameBase game)
         {
             dstRect.w = width * SCALE;

@@ -11,6 +11,7 @@ namespace WarwarriorGame
         public float Mass { get; set; }
         public Vector2 Position { get; set; }
         public Vector2 Origin => Position + Renderer.GetCenter();
+        public float Radius => Renderer.GetRadius();
 
         public StellarBase(Vector2 position, float mass)
         {

@@ -18,7 +18,7 @@ namespace WarwarriorGame
                 if (Actor.Actors[i].DoesCollideWith(this))
                 {
                     Actor.Actors[i].AddShieldHealth(2);
-                    Particles.Remove(this);
+                    MarkedForRemoval = true;
                 }
 
                 Vector2 difference = Actor.Actors[i].Origin - Position;
