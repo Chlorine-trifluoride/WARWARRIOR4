@@ -7,10 +7,14 @@
 ### Info
 
 Warwarrior is a space physics game.
+<br/>
+
 <img src="https://github.com/Chlorine-trifluoride/WARWARRIOR4/raw/master/.github/media/wsmall.gif"/>
 
 
 This project is a showcase of a leaderboard API.
+<br/>
+
 <img src="https://github.com/Chlorine-trifluoride/WARWARRIOR4/raw/master/.github/media/menu.gif"/>
 
 ### WarwarriorGame Windows Build
@@ -21,7 +25,7 @@ This project is a showcase of a leaderboard API.
 
 Open Warwarrior.csproj in Visual Studio or from command line:
 ```
-cd Warwarrior
+cd WarwarriorGame
 dotnet run --configuration Release
 ```
 
