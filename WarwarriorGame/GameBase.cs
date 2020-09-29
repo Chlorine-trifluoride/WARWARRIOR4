@@ -158,6 +158,8 @@ namespace WarwarriorGame
 
             if (InputManager.GetKeyState(SDL.SDL_Keycode.SDLK_ESCAPE))
                 quit = true;
+
+            InputManager.ResetFrameKeys();
         }
 
         protected abstract void Load(IntPtr rendererPtr);

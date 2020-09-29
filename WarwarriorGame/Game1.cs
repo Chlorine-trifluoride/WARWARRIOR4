@@ -16,11 +16,12 @@ namespace WarwarriorGame
         private AnimatedStellarObject star3;
         private UI ui;
         private uint nextSpawn = 0;
+        private uint difficulty;
         private Random random = new Random();
 
-        public Game1(int windowWidth, int windowHeight) : base(windowWidth, windowHeight)
+        public Game1(int windowWidth, int windowHeight, uint difficulty) : base(windowWidth, windowHeight)
         {
-
+            this.difficulty = difficulty;
         }
 
         protected override void Init()
@@ -108,7 +109,7 @@ namespace WarwarriorGame
                     spawnPos = Vector2.Random() * WindowWidth * 2.5f;
 
                 new Enemy(spawnPos, (float)(random.NextDouble() * 2 * MathF.PI));
-                nextSpawn = SDL.SDL_GetTicks() + 3000;
+                nextSpawn = SDL.SDL_GetTicks() + 8000 / difficulty;
             }
 
             Camera.Update(player.Position, this, deltaTime);
