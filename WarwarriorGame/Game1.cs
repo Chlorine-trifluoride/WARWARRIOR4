@@ -70,6 +70,7 @@ namespace WarwarriorGame
             background.LoadInit(rendererPtr, "assets/textures/stars01_brightstarts.png");
             PlayerShipRenderer.LoadInit(rendererPtr, "assets/textures/playersheet.png");
             ParticleRenderer.LoadInit(rendererPtr, "assets/textures/PlayerFire.png");
+            ProjectileRenderer.LoadInit(rendererPtr, "assets/textures/PlayerFire.png", "assets/textures/EnemyFire.png");
             StellarRenderer.LoadInit(rendererPtr, "assets/textures/star01.png");
             AnimatedStellarRenderer.LoadInit(rendererPtr, "assets/textures/star_blue_fixed.png");
             ShieldRenderer.LoadInit(rendererPtr, "assets/textures/Shield.png");
@@ -132,7 +133,7 @@ namespace WarwarriorGame
             Parallel.For(0, Particle.Particles.Count,
                 i => {
                     // Don't update particles too far away
-                    if (Utils.GetDistance(Particle.Particles[i].Position, Player.Inst.Position) > 2500.0f)
+                    if (Utils.GetDistance(Particle.Particles[i].Position, Player.Inst.Position) > 4500.0f)
                         return;
 
                     Particle.Particles[i].UpdateLogic(deltaTime);
