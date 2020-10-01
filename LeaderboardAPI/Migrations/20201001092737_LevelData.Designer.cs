@@ -3,15 +3,17 @@ using System;
 using LeaderboardAPI.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LeaderboardAPI.Migrations
 {
     [DbContext(typeof(LeaderboardContext))]
-    partial class LeaderboardContextModelSnapshot : ModelSnapshot
+    [Migration("20201001092737_LevelData")]
+    partial class LevelData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -22,7 +22,13 @@ namespace LeaderboardAPI.Contexts
             modelBuilder.UseIdentityColumns();
             modelBuilder.Entity<Score>().ToTable("scores").Property(p => p.id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Player>().ToTable("players").Property(p => p.id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Level>().ToTable("levels");
+            modelBuilder.Entity<Level>().ToTable("levels").HasData(
+                new Level { id = 1, name = "Level 1" },
+                new Level { id = 2, name = "Level 2" },
+                new Level { id = 3, name = "Level 3" },
+                new Level { id = 4, name = "Level 4" },
+                new Level { id = 5, name = "Level 5" }
+                );
         }
     }
 }
